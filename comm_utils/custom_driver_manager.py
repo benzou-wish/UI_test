@@ -1,26 +1,23 @@
 import logging
+import time
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.common.by import By
-from log import Log
+import os
+
+os.environ['GH_TOKEN'] = "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"
 
 
-class CustomDriverManager:
-    def __init__(self):
-        print(r'this is custom driver manager')
+class AutoInstallDriver:
+    def __init__(self, driver):
+        if driver == 'chrome':
+            self.service = ChromeService(ChromeDriverManager(path=os.path.join(os.getcwd(), '../drivers')).install())
+        elif driver == 'firefox':
+            self.service = FirefoxService(GeckoDriverManager(path=os.path.join(os.getcwd(), '../drivers')).install())
 
-    def __del__(self):
-        print(r'this is to delete driver manager')
-
-
-class CustomDriver:
-    def __init__(self):
-        print('this is to start a new webdriver')
-
-    def __del__(self):
-        print(r'this is to stop a webdriver')
-
+    def get_service(self):
+        self.service.start()
+        return self.service
