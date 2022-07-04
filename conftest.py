@@ -5,7 +5,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from base.base_page import BasePage
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='session')
 def get_driver() -> WebDriver:
     """
     :return: WebDriver

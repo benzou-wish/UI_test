@@ -2,7 +2,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
 from base.base_page import BasePage
-from page.sample_login import Login
+from page.login import Login
 
 
 class HomePage(BasePage):

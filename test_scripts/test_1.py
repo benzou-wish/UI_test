@@ -2,7 +2,7 @@ import time
 
 from selenium.webdriver.common.by import By
 
-from page.sample_homepage import HomePage
+from page.homepage import HomePage
 import pytest
 from selenium.webdriver import ActionChains
 
