@@ -1,24 +1,16 @@
 # coding=utf-8
-import allure
 import pytest
 from selenium import webdriver
-from comm_utils.custom_driver_manager import AutoInstallDriver
+from selenium.webdriver.remote.webdriver import WebDriver
+from base.base_page import BasePage
 
 
 @pytest.fixture(scope='function')
-def get_driver(get_service) -> webdriver:
+def get_driver() -> WebDriver:
     """
-    :return: webdriver
+    :return: WebDriver
     """
-    driver = webdriver.Remote(command_executor=get_service.service_url)
+    basePage = BasePage(browser='chrome')
+    driver = basePage.driver
     yield driver
-    driver.quit()
-
-
-@pytest.fixture(scope='session')
-def get_service():
-    service = AutoInstallDriver('chrome').get_service()
-    yield service
-    service.stop()
-
-
+    basePage.close()
