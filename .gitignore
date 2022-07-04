@@ -1,5 +1,0 @@
-/test_scripts/.pytest_cache/
-/test_scripts/__pycache__/
-/drivers/
-/geckodriver.log
-.idea/
