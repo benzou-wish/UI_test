@@ -2,22 +2,27 @@ import time
 
 from selenium.webdriver.common.by import By
 
-from page.homepage import HomePage
+from page.login_page import LoginPage
+from page.welcome_page import WelcomePage
 import pytest
 from selenium.webdriver import ActionChains
 
 
-class TestSample:
-    def test_1(self, get_driver):
+class TestWelcome:
+    def test_go_login(self, get_driver):
         """
 
         :param get_driver: init a driver from conftest for entire test use
         :return:
         """
-        browser = get_driver
         # create a homepage po
-        homepage = HomePage(browser=browser)
-        # click the button on dialog
-        homepage.click(locator_type=By.CLASS_NAME, locator_value='btn-close-popup')
+        welcomePage = WelcomePage(get_driver)
+        # remove the dialog
+        welcomePage.hide_dialog()
         # click login btn in homepage
-        login_page = homepage.login()
+        loginPage = welcomePage.go_to_login()
+        time.sleep(1)
+        loginPage.input_username()
+
+    def test_go_signup(self):
+        pass
