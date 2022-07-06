@@ -20,3 +20,8 @@ PO设计模式
       1. 加载环境变量
       2. 启动, 复用, 关闭driver
 6. run.py & run.sh & single_run.py -- 入口脚本
+
+TODO list:
+1. 用例管理
+2. 测试报告
+3. 自定义断言
