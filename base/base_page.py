@@ -21,32 +21,36 @@ class BasePage(object):
     define base class for all page object
     """
 
-    def __init__(self, browser=None, options=None):
+    def __init__(self, browser=None, options=None, url=None):
         if browser and isinstance(browser, WebDriver):
             self._driver = browser
         else:
             self._service = None
-            self.InitDriver(browser, options)
+            self.InitDriver(browser, options, url)
 
-    def InitDriver(self, browser, options):
+    def InitDriver(self, browser, options, url):
         if not browser or browser == 'chrome':
             self._service = ChromeService(
-                ChromeDriverManager(path=os.path.join(os.getcwd(), '../drivers')).install())
+                ChromeDriverManager(path=os.path.join(os.path.dirname(os.path.abspath(__file__)), '../drivers')).install())
             option = webdriver.ChromeOptions()
             if options:
                 option.add_argument(options)
             self._driver = webdriver.Chrome(service=self._service, options=option)
             self._driver.implicitly_wait(5)
+            if url:
+                self._driver.get(url)
 
         elif browser == 'firefox':
             self._service = FirefoxService(
-                GeckoDriverManager(path=os.path.join(os.getcwd(), '../drivers')).install())
+                GeckoDriverManager(path=os.path.join(os.path.dirname(os.path.abspath(__file__)), '../drivers')).install())
             self._service.start()
             option = webdriver.FirefoxOptions()
             if options:
                 option.add_argument(options)
             self._driver = webdriver.Firefox(service=self._service, options=option)
             self._driver.implicitly_wait(5)
+            if url:
+                self._driver.get(url)
 
         else:
             raise Exception('only support chrome and firefox for now')
@@ -108,6 +112,8 @@ class BasePage(object):
             element = WebDriverWait(self.driver, timeout).until(
                 lambda a: self.driver.find_element(*loc))
         except (NoSuchElementException, TimeoutException) as e:
+            # TODO move to logging
+            print(f'无法定位元素 {loc}')
             raise e
         return element
 

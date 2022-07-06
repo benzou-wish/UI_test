@@ -7,9 +7,13 @@ class LoginPage(BasePage):
 
     class Loc:
         username_input = (By.ID, 'input-74')
+        password_input = (By.ID, '')
 
-    def input_username(self):
-        self.input(*self.Loc.username_input, input_value='test_user')
+    def input_username(self, username):
+        self.input(*self.Loc.username_input, input_value=username)
+
+    def input_password(self, password):
+        self.input(*self.Loc.username_input, input_value=password)
 
     def login(self):
         pass
